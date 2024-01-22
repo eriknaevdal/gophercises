@@ -2,23 +2,19 @@ package main
 
 import (
 	"encoding/csv"
+	"flag"
 	"fmt"
 	"os"
-	"strconv"
 	"time"
 )
 
 func main() {
 	// open CSV file
-	args := os.Args
-	args[1] = "30"
-	duration, err := strconv.ParseInt(args[1], 10, 64)
+	csvFlag := flag.String("csv", "csv/problems.csv", "a csv file in the format of 'question,answer'")
+	durationFlag := flag.Int("duration", 30, "the time limit for the quiz in seconds")
+	flag.Parse()
 
-	if err != nil {
-		fmt.Println("Unable to parse duration, using default 30")
-		duration = 30
-	}
-	file, error := os.Open("csv/problems.csv")
+	file, error := os.Open(*csvFlag)
 	if error != nil {
 		fmt.Println(error)
 	}
@@ -36,7 +32,7 @@ func main() {
 		var answer string
 
 		go func() {
-			time.Sleep(time.Duration(duration) * time.Second)
+			time.Sleep(time.Duration(*durationFlag) * time.Second)
 			fmt.Println("Time's up!")
 			fmt.Println("You scored", correctAnswers, "out of", len(records))
 			os.Exit(1)

@@ -12,6 +12,8 @@ func main() {
 	// open CSV file
 	csvFlag := flag.String("csv", "csv/problems.csv", "a csv file in the format of 'question,answer'")
 	durationFlag := flag.Int("duration", 30, "the time limit for the quiz in seconds")
+	// Not implemented yet
+	// randomFlag := flag.Bool("random", false, "randomize the order of the quiz")
 	flag.Parse()
 
 	file, error := os.Open(*csvFlag)
